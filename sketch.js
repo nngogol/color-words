@@ -4,6 +4,7 @@ var butttton;
 var mkSpan;
 var canvas;
 var clearCanvas;
+var ColorIt;
 
 // helper
 function sleepms(ms) {
@@ -96,7 +97,14 @@ async function ChangeGivenWord(word){
     word.style("color", "rgb(51, 51, 51)");
 }
 
+function ChangeWordsColor() {
 
+    var words = selectAll(".word");
+
+    for (var i = 0; i < words.length; i++) {
+        ChangeGivenWord(words[i]);
+    }
+}
 
 function get_image_with_api(word) {
 
@@ -116,12 +124,12 @@ function get_image_with_api(word) {
 
 // General events
 function mousePressed() {
-    var words = selectAll(".word")
+    // var words = selectAll(".word")
 
-    for (var i = 0; i < words.length; i++) {
-        ChangeGivenWord(words[i])
-        // console.log(words[i]);
-    }
+    // for (var i = 0; i < words.length; i++) {
+    //     ChangeGivenWord(words[i])
+    //     // console.log(words[i]);
+    // }
 
 }
 
@@ -135,7 +143,6 @@ function windowResized(){
 //================  MAIN  =======================
 //===============================================
 
-// __Setup__
 function setup() {
 
     frameRate(60);
@@ -154,23 +161,43 @@ function setup() {
     outputSpan = select("#outputSpan");
     mkSpan = select("#mkSpan");
     clearCanvas = select("#clearCanvas")
+    ColorIt = select("#ColorItBtn")
     
 
     // ____binding events to elements____
     mkSpan.mousePressed(CreateSpanOfWords);
+    ColorIt.mousePressed(ChangeWordsColor);
     // butttton.mousePressed( ___ );
 
 
     // just for fun, i've involked this func,
     // this is done for instant result on a page
-    CreateSpanOfWords();
+    // CreateSpanOfWords();
 }
 
 
 var scaleCursorX = 50
 var scaleCursorY = 60
 
-// __Draw__
+
+function my_func(argument) {
+    
+    return (cos(argument) + cos(argument)*tan(argument)) / cos(argument/4)
+}
+
+function show_cursor() {
+    
+    var math_func = my_func
+    // var math_func = cos
+    // var math_func = tan
+    // var math_func = floor
+
+    ellipse(mouseX,mouseY+200,
+        sin(frameCount/60)*scaleCursorX,
+        sin(frameCount/60)*scaleCursorY)
+}
+
+
 function draw() {
 
     // background is accualy transperent !
@@ -183,22 +210,16 @@ function draw() {
     stroke(0)
     strokeWeight(1)
     // it self
-    ellipse(width/2,height/2,sin(frameCount/60)*scaleCursorX,cos(frameCount/60)*scaleCursorY)
+    ellipse(width/2,height/2,my_func(frameCount/60)*scaleCursorX,cos(frameCount/60)*scaleCursorY)
     
-
-
     // cursor
-    ellipse(mouseX,mouseY,cos(frameCount/50)*scaleCursorX,cos(frameCount/60)*scaleCursorY)
-
+    // show_cursor()
 
 
     // trail
     stroke(255)
-    // fill(255)
     strokeWeight(6)
-
     line(pmouseX,pmouseY,mouseX,mouseY)
-
 
 
     // stroke(255,200,200)
