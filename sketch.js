@@ -1,3 +1,6 @@
+var MyFrameRate = 60
+
+
 var textField;
 var outputSpan;
 var butttton;
@@ -49,7 +52,7 @@ function CreateSpanOfWords() {
     // this is thesame.
     // i created this, coz i don'n want to append extra createDiv(" ").parent(outputSpan);
     // so that's why i < words.length - 1, and NOT i < words.length
-    createDiv(words[words.length - 1]).parent(outputSpan).mouseClicked(changeWord);
+    createDiv(words[words.length - 1]).parent(outputSpan).class("word").mouseClicked(changeWord);
 }
 
 function changeWord() {
@@ -121,18 +124,6 @@ function get_image_with_api(word) {
 
 //===============================================
 
-
-// General events
-function mousePressed() {
-    // var words = selectAll(".word")
-
-    // for (var i = 0; i < words.length; i++) {
-    //     ChangeGivenWord(words[i])
-    //     // console.log(words[i]);
-    // }
-
-}
-
 // Triggered, when window Resized AND
 function windowResized(){
     // it resized your canvas WITH NEW (windowWidth, windowHeight), yay
@@ -145,7 +136,7 @@ function windowResized(){
 
 function setup() {
 
-    frameRate(60);
+    frameRate(MyFrameRate);
     canvas = createCanvas(windowWidth, windowHeight)
 
     // it will be at x=0 y=0 of a HOME page.
@@ -167,7 +158,19 @@ function setup() {
     // ____binding events to elements____
     mkSpan.mousePressed(CreateSpanOfWords);
     ColorIt.mousePressed(ChangeWordsColor);
-    // butttton.mousePressed( ___ );
+    butttton.mousePressed(FuncForDelteing );
+    
+
+    var text = 'Welcome to RegExr v2.1 by gskinner.com, proudly hosted by Media Temple!\nEdit the Expression & Text to see matches. Roll over matches or the expression for details. Undo mistakes with ctrl-z. Save Favorites & Share expressions with friends or the Community. Explore your results with Tools. A full Reference & Help is available in the Library, or watch the video Tutorial.\nSample text for testing:\nabcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    
+
+    var r = /([A-Z]{1}[a-z]{1,5})[^\w]?\b/gm
+
+    while( r.exec()){
+
+    }
+
+    console.log("dsadsad")
 
 
     // just for fun, i've involked this func,
@@ -175,26 +178,38 @@ function setup() {
     // CreateSpanOfWords();
 }
 
+function FuncForDelteing() {
+    // console.log("ds");
+    $('body').append(" <p>html code here please, vlados</p>")
 
-var scaleCursorX = 50
-var scaleCursorY = 60
+    // clearing inside of $('#outputSpan')
+    
+    $('#outputSpan').html("");
 
+}
+
+
+
+
+
+var scaleCursorX = MyFrameRate;
+var scaleCursorY = MyFrameRate;
 
 function my_func(argument) {
-    
     return (cos(argument) + cos(argument)*tan(argument)) / cos(argument/4)
 }
 
 function show_cursor() {
     
     var math_func = my_func
+    //  or you can use this functions:
     // var math_func = cos
     // var math_func = tan
     // var math_func = floor
 
     ellipse(mouseX,mouseY+200,
-        sin(frameCount/60)*scaleCursorX,
-        sin(frameCount/60)*scaleCursorY)
+        sin(frameCount/MyFrameRate)*scaleCursorX,
+        sin(frameCount/MyFrameRate)*scaleCursorY)
 }
 
 
@@ -210,7 +225,7 @@ function draw() {
     stroke(0)
     strokeWeight(1)
     // it self
-    ellipse(width/2,height/2,my_func(frameCount/60)*scaleCursorX,cos(frameCount/60)*scaleCursorY)
+    ellipse(width/2,height/2,my_func(frameCount/MyFrameRate)*scaleCursorX,cos(frameCount/MyFrameRate)*scaleCursorY)
     
     // cursor
     // show_cursor()
